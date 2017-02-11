@@ -1,4 +1,5 @@
 require 'twitter_oauth'
+require_relative 'util'
 class Twitter
 
   attr_reader :authed
@@ -7,16 +8,11 @@ class Twitter
   #---------------------------------------------------------------------
   def initialize
 
-    twitter_api = Util.read_secret('twitter_api')
+    twitter_api = Util.get_twitter_api_key
     key = twitter_api['key']
     secret = twitter_api['secret']
-    a_token = nil
-    a_secret = nil
-
-    if @access_token = Util.read_secret
-      a_token = @access_token[:token] || nil
-      a_secret = @access_token[:secret] || nil
-    end
+    a_token = twitter_api['access_token']
+    a_secret = twitter_api['access_token_secret']
 
     @twitter = TwitterOAuth::Client.new(
       :consumer_key => key,
