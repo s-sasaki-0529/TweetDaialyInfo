@@ -19,12 +19,11 @@ class Zaim
     @access_token = OAuth::AccessToken.new(@consumer, api_key["access_token"], api_key["access_token_secret"])
   end
 
-  # 本日の総支出額を戻す
-  def get_today_paid(params = {})
-    today = Date.today.strftime("%Y-%m-%d")
+  # 指定した日付の総支出額を戻す
+  def get_days_amount(date , params = {})
     params["mode"] = "payment"
-    params["start_date"] = today
-    params["end_date"] = today
+    params["start_date"] = date
+    params["end_date"] = date
     url = Util.make_url("home/money" , params)
     get(url)["money"].inject(0) {|sum , n| sum + n["amount"]}
   end
