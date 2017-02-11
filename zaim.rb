@@ -9,7 +9,7 @@ class Zaim
   # ZaimAPIへのアクセストークンを生成する
   #--------------------------------------------------------------------
   def initialize
-    api_key = Util.get_api_key
+    api_key = Util.get_zaim_api_key
     oauth_params = {
       site: "https://api.zaim.net",
       request_token_path: "/v2/auth/request",
@@ -17,10 +17,9 @@ class Zaim
       access_token_path: "https://api.zaim.net"
     }
     @consumer = OAuth::Consumer.new(api_key["key"], api_key["secret"], oauth_params)
-    @access_token = OAuth::AccessToken.new(@consumer, api_key["oauth_token"], api_key["oauth_secret"])
+    @access_token = OAuth::AccessToken.new(@consumer, api_key["access_token"], api_key["access_token_secret"])
   end
 
-  private
   def get_verify
     get("home/user/verify")
   end
