@@ -7,13 +7,22 @@ class Util
   KEYSFILE = "keys.json"
 
   # APIキーを取得
-  # {:key => hoge , :secret => fuga}
-  #--------------------------------------------------------------------
-  def self.get_api_key()
+  def self.get_api_key
     File.open(KEYSFILE) do |f|
       keys = JSON.load(f)
-      p keys
     end
+  end
+
+  # ZaimAPIキーを取得
+  def self.get_zaim_api_key
+    keys = self.get_api_key
+    keys['zaim']
+  end
+
+  # TwitterAPIキーを取得
+  def self.get_twitter_api_key
+    keys = self.get_api_key
+    keys['twitter']
   end
 
 end
