@@ -7,7 +7,6 @@ class Zaim
   API_URL = 'https://api.zaim.net/v2/'
 
   # ZaimAPIへのアクセストークンを生成する
-  #--------------------------------------------------------------------
   def initialize
     api_key = Util.get_zaim_api_key
     oauth_params = {
@@ -20,41 +19,19 @@ class Zaim
     @access_token = OAuth::AccessToken.new(@consumer, api_key["access_token"], api_key["access_token_secret"])
   end
 
-  def get_verify
-    get("home/user/verify")
-  end
-
-  def get_payments(params = {})
+  # 本日の総支出額を戻す
+  def get_today_paid(params = {})
+    today = Date.today.strftime("%Y-%m-%d")
     params["mode"] = "payment"
+    params["start_date"] = today
+    params["end_date"] = today
     url = Util.make_url("home/money" , params)
-    get(url)["money"]
+    get(url)["money"].inject(0) {|sum , n| sum + n["amount"]}
   end
 
-  def get_incomes(params = {})
-    params["mode"] = "income"
-    url = Util.make_url("home/money" , params)
-    get(url)["money"]
-  end
-
-  def get_categories
-    get("home/category")["categories"]
-  end
-
-  def get_genres
-    get("home/genre")["genres"]
-  end
-
-  def create_payments(category , genre , amount)
-    post("home/money/payment" , category_id: category, genre_id: genre, amount: amount)
-  end
-
+  # ZaimAPIに対してリクエストを送信する
   def get(url)
     response = @access_token.get("#{API_URL}#{url}")
-    JSON.parse(response.body)
-  end
-
-  def post(url , params = nil)
-    response = @access_token.post("#{API_URL}#{url}" , params)
     JSON.parse(response.body)
   end
 
