@@ -28,9 +28,15 @@ class Zaim
     get(url)["money"].inject(0) {|sum , n| sum + n["amount"]}
   end
 
-  # ZaimAPIに対してリクエストを送信する
+  # ZaimAPIに対してPOSTリクエストを送信する
   def get(url)
     response = @access_token.get("#{API_URL}#{url}")
+    JSON.parse(response.body)
+  end
+
+  # ZaimAPIに対してPUTリクエストを送信する
+  def put(url , params = nil)
+    response = @access_token.put("#{API_URL}#{url}" , params)
     JSON.parse(response.body)
   end
 
