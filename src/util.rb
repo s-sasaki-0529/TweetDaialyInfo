@@ -9,7 +9,7 @@ class Util
   # APIキーを取得
   def self.get_api_key
     File.open(KEYSFILE) do |f|
-      keys = JSON.load(f)
+      JSON.load(f)
     end
   end
 
