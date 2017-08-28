@@ -6,7 +6,9 @@ class Zaim
 
   API_URL = 'https://api.zaim.net/v2/'
 
-  # ZaimAPIへのアクセストークンを生成する
+  #
+  # 初期化時にZaimAPIの利用準備を行う
+  #
   def initialize
     api_key = Util.get_zaim_api_key
     oauth_params = {
@@ -19,8 +21,11 @@ class Zaim
     @access_token = OAuth::AccessToken.new(@consumer, api_key["access_token"], api_key["access_token_secret"])
   end
 
-  # 指定した日付の総支出額を戻す
+  #
+  # 指定した日付の総支出額を取得
+  #
   def get_days_amount(date , params = {})
+    date = date.strftime('%Y-%m-%d')
     params["mode"] = "payment"
     params["start_date"] = date
     params["end_date"] = date
@@ -28,13 +33,17 @@ class Zaim
     get(url)["money"].inject(0) {|sum , n| sum + n["amount"]}
   end
 
-  # ZaimAPIに対してPOSTリクエストを送信する
+  #
+  # ZaimAPIに対してPOSTリクエストを送信
+  #
   def get(url)
     response = @access_token.get("#{API_URL}#{url}")
     JSON.parse(response.body)
   end
 
-  # ZaimAPIに対してPUTリクエストを送信する
+  #
+  # ZaimAPIに対してPUTリクエストを送信
+  #
   def put(url , params = nil)
     response = @access_token.put("#{API_URL}#{url}" , params)
     JSON.parse(response.body)

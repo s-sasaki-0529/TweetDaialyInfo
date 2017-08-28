@@ -4,8 +4,9 @@ class Twitter
 
   attr_reader :authed
 
-  # initialize - TwitterAPIアクセス用トークンを生成
-  #---------------------------------------------------------------------
+  #
+  # 初期化時にTwitterAPIの利用準備
+  #
   def initialize
 
     twitter_api = Util.get_twitter_api_key
@@ -23,8 +24,9 @@ class Twitter
     @authed = @twitter && @twitter.info['screen_name'] ? true : false
   end
 
-  # tweet - ツイートする
-  #-------------------------------------------------------------------
+  #
+  # tweet 指定したテキストをツイートする
+  #
   def tweet(text)
     @twitter.update(text)
   end
