@@ -1,3 +1,4 @@
+require 'date'
 require 'json'
 require 'net/http'
 
@@ -9,9 +10,10 @@ class Github
     @username = username
   end
 
-  def events
+  def events_by_date(date)
     url = "#{@@BASE_URL}/users/#{@username}/events"
-    get url
+    events = get url
+    events.select {|e| Date.parse(e['created_at']) == date}
   end
 
   private
