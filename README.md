@@ -1,4 +1,4 @@
-# 本日の支出額をツイートするCUIツール
+# 一日の記録をツイートするCUIツール
 
 ## 前提
 
@@ -12,6 +12,25 @@
 2. cd TweetPaidInfo
 3. bundle install --path bundle/vendor
 4. keys.json(アクセストークンなどを記載したファイル)を配置
+
+## keys.jsonの例
+
+```
+{
+  "zaim": {
+    "key":"hogehoge",
+    "secret":"fugafuga",
+    "access_token":"foofoo",
+    "access_token_secret":"barbar"
+  },
+  "twitter": {
+    "key":"hogehoge",
+    "secret":"fugafuga",
+    "access_token":"foofoo",
+    "access_token_secret":"barbar"
+  }
+}
+```
 
 ## 実行方法
 
