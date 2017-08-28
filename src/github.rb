@@ -33,6 +33,16 @@ class Github
     end
 
     #
+    # 指定したコミットの変更行数を取得
+    # 変更行数は、追加行数 - 削除行数で求める
+    #
+    def added_lines(repository, commit_hash)
+      url = "#{@@BASE_URL}/repos/#{repository}/commits/#{commit_hash}"
+      commit = get url
+      commit['files'].inject(0) {|sum, f| sum + (f['additions'] - f['deletions']) }
+    end
+
+    #
     # 指定したURLにGETリクエストを送信する
     #
     def get(url)
