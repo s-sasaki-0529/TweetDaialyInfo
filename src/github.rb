@@ -29,7 +29,10 @@ class Github
     def events_by_date(date)
       url = "#{@@BASE_URL}/users/#{@username}/events"
       events = get url
-      events.select {|e| e['type'] === 'PushEvent' && Date.parse(e['created_at']) == date}
+      events.select do |e|
+        e['created_at'] = DateTime.parse(e['created_at']).new_offset(Rational(9, 24))
+        e['type'] === 'PushEvent' && e['created_at'].to_date == date
+      end
     end
 
     #
