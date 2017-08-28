@@ -8,8 +8,10 @@ class Github
 
   #
   # Githubのユーザ名と、集計対象の日付を指定して初期化
+  # GithubAPI用のトークンは環境変数より取得する
   #
   def initialize(username, date = Date.today)
+    @token    = ENV['GITHUB_API_TOKEN']
     @username = username
     @events   = events_by_date(date)
   end
@@ -19,6 +21,17 @@ class Github
   #
   def commit_count
     @events.inject(0) {|sum, e| sum + e['payload']['commits'].length}
+  end
+
+  #
+  # イベントリストに含まれる総変更行数を取得
+  #
+  def total_added_lines
+    @events.inject(0) do |total, event|
+      total + event['payload']['commits'].inject(0) do |lines, commit|
+        lines + added_lines(event['repo']['name'], commit['sha'])
+      end
+    end
   end
 
   private
@@ -31,7 +44,7 @@ class Github
       events = get url
       events.select do |e|
         e['created_at'] = DateTime.parse(e['created_at']).new_offset(Rational(9, 24))
-        e['type'] === 'PushEvent' && e['created_at'].to_date == date
+        e['type'] === 'PushEvent' && e['repo']['name'].index(@username) && e['created_at'].to_date == date
       end
     end
 
@@ -42,7 +55,7 @@ class Github
     def added_lines(repository, commit_hash)
       url = "#{@@BASE_URL}/repos/#{repository}/commits/#{commit_hash}"
       commit = get url
-      commit['files'].inject(0) {|sum, f| sum + (f['additions'] - f['deletions']) }
+      commit['files'].reject {|f| f['filename'].index('backup')}.inject(0) {|sum, f| sum + (f['additions'] - f['deletions']) }
     end
 
     #
@@ -52,6 +65,7 @@ class Github
       uri = URI.parse(url)
       https = Net::HTTP.new(uri.host, uri.port)
       https.use_ssl = true
+      uri.query = URI.encode_www_form(access_token: @token)
       req = Net::HTTP::Get.new(uri.request_uri)
       res = https.request(req)
       JSON.parse(res.body)
