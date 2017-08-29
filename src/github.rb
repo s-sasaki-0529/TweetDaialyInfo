@@ -1,6 +1,7 @@
 require 'date'
 require 'json'
 require 'net/http'
+require_relative 'util'
 
 class Github
 
@@ -11,7 +12,7 @@ class Github
   # GithubAPI用のトークンは環境変数より取得する
   #
   def initialize(username, date = Date.today)
-    @token    = ENV['GITHUB_API_TOKEN']
+    @token    = Util.get_github_api_key
     @username = username
     @events   = events_by_date(date)
   end

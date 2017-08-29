@@ -32,6 +32,13 @@ class Util
   end
 
   #
+  # GithubAPIキーを取得
+  #
+  def self.get_github_api_key
+    self.get_api_key['github']
+  end
+
+  #
   # GET用のURLを生成する
   #
   def self.make_url(url , params)
