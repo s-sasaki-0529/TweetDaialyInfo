@@ -15,8 +15,12 @@ Twitter.new.tweet(<<EOL)
 
 #{today.strftime('%Y-%m-%d')}
 
-支出額:   #{amounts}円
-Github: #{commits}コミット(計#{lines}行追加)
+【支出額】
+#{amounts}円
+
+【Github】
+#{commits}コミット
+計#{lines}行追加
 
 #ketilog
 EOL
