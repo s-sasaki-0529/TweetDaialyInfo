@@ -25,7 +25,22 @@ class Twitter
   end
 
   #
-  # tweet 指定したテキストをツイートする
+  # 指定した日のツイート数を取得
+  #
+  def tweets_count(date)
+    params = {
+      screen_name: @twitter.info['screen_name'],
+      count:           200,
+      trim_user:       true,
+      exclude_replies: false,
+      include_rts:     false,
+    }
+    tweets = @twitter.user_timeline(params).select {|t| Util.str_to_date(t['created_at']) == date}
+    tweets.count
+  end
+
+  #
+  # 指定したテキストをツイートする
   #
   def tweet(text)
     @twitter.update(text)

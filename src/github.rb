@@ -43,8 +43,8 @@ class Github
       url = "#{@@BASE_URL}/users/#{@username}/events"
       events = get url
       events.select do |e|
-        e['created_at'] = DateTime.parse(e['created_at']).new_offset(Rational(9, 24))
-        e['type'] === 'PushEvent' && e['repo']['name'].index(@username) && e['created_at'].to_date == date
+        e['created_at'] = Util.str_to_date(e['created_at'])
+        e['type'] === 'PushEvent' && e['repo']['name'].index(@username) && e['created_at'] == date
       end
     end
 

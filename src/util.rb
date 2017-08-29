@@ -46,4 +46,12 @@ class Util
     return url_escape
   end
 
+  #
+  # 日時文字列を日付データに変換する
+  # 日時には9時間の時差が含まれていることを前提とする
+  #
+  def self.str_to_date(date)
+    DateTime.parse(date).new_offset(Rational(9, 24)).to_date
+  end
+
 end
