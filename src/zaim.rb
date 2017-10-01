@@ -1,4 +1,3 @@
-require 'oauth'
 require 'json'
 require 'pp'
 require_relative "util"
@@ -22,15 +21,29 @@ class Zaim
   end
 
   #
-  # 指定した日付の総支出額を取得
+  # 指定した日付の私費/公費の和をそれぞれ戻す
   #
   def get_days_amount(date , params = {})
+    payments = self.get_days_payments(date, params)
+    public_payments, private_payments = payments.partition{|payment| payment['comment'] =~ /私費/}
+    public_amounts = public_payments.inject(0) {|sum, n| sum + n['amount'] }
+    private_amounts = private_payments.inject(0) {|sum, n| sum + n['amount'] }
+    return {
+      public: public_amounts,
+      private: private_amounts
+    }
+  end
+
+  #
+  # 指定した日付の支出一覧を取得
+  #
+  def get_days_payments(date, params = {})
     date = date.strftime('%Y-%m-%d')
     params["mode"] = "payment"
     params["start_date"] = date
     params["end_date"] = date
     url = Util.make_url("home/money" , params)
-    get(url)["money"].inject(0) {|sum , n| sum + n["amount"]}
+    get(url)['money']
   end
 
   #
