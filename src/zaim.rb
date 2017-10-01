@@ -25,7 +25,7 @@ class Zaim
   #
   def get_days_amount(date , params = {})
     payments = self.get_days_payments(date, params)
-    public_payments, private_payments = payments.partition{|payment| payment['comment'] =~ /私費/}
+    private_payments, public_payments = payments.partition{|payment| payment['comment'] =~ /私費/}
     public_amounts = public_payments.inject(0) {|sum, n| sum + n['amount'] }
     private_amounts = private_payments.inject(0) {|sum, n| sum + n['amount'] }
     return {

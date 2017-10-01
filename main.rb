@@ -4,15 +4,16 @@ require_relative 'src/github'
 
 begin
   today   = Date.today
-  zaim    = Zaim.new
-  twitter = Twitter.new
   github  = Github.new('Sa2Knight')
+  twitter = Twitter.new
+  amounts = Zaim.new.get_days_amount(today)
 
   twitter.tweet(<<EOL)
   #{today.strftime('%Y-%m-%d')}
 
   【Zaim】
-  支出額:     #{zaim.get_days_amount(today)}円
+  公費:     #{amounts[:public]}円
+  私費:     #{amounts[:private]}円
 
   【Twitter】
   ツイート数: #{twitter.tweets_count(today)}
