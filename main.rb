@@ -25,8 +25,10 @@ begin
   #ketilog
 EOL
 rescue => e
-  Twitter.new.tweet(<<EOL)
-  #ketilog がバグりました
+  p(<<EOL)
+  バグった
+  #{e}
   #{e.backtrace.join("\n")}
 EOL
+[0,180]
 end
