@@ -3,30 +3,29 @@ require_relative 'src/zaim'
 require_relative 'src/github'
 
 begin
-  today   = Date.today
-  github  = Github.new('Sa2Knight')
-  twitter = Twitter.new
-  amounts = Zaim.new.get_days_amount(today)
+  today    = Date.today
+  github   = Github.new('Sa2Knight')
+  twitter  = Twitter.new
+  zaim     = Zaim.new
+  payments = zaim.get_days_amount(today)
+  budget   = zaim.get_current_month_private_budget
 
   twitter.tweet(<<EOL)
-  #{today.strftime('%Y-%m-%d')}
+#{today.strftime('%Y-%m-%d')}
 
-  【Zaim】
-  公費:     #{amounts[:public]}円
-  私費:     #{amounts[:private]}円
+支出[公費]: #{payments[:public]}円
+支出[私費]: #{payments[:private]}円
+予算[今月]: #{budget}円
 
-  【Twitter】
-  ツイート数: #{twitter.tweets_count(today)}
+ツイート数: #{twitter.tweets_count(today)}
+コミット数: #{github.commit_count}
 
-  【Github】
-  コミット数: #{github.commit_count}
-  追加行数:   #{github.total_added_lines}行
-
-  #ketilog
+#ketilog
 EOL
+
 rescue => e
-  p(<<EOL)
-  バグった
+  twitter.tweet(<<EOL)
+  #ketilog バグった
   #{e}
   #{e.backtrace.join("\n")}
 EOL
