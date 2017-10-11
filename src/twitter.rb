@@ -40,6 +40,24 @@ class Twitter
   end
 
   #
+  # 指定したテキストを含む直近のツイートを取得
+  #
+  def search_last_tweet_by_text(user_screen_name, text, opt = {})
+    params = {
+      screen_name: user_screen_name,
+      count: 200,
+      tweet_mode: :extended,
+    }.merge(opt)
+    tweets = @twitter.user_timeline(params)
+    tweet  = tweets.select {|t| t['full_text'].index(text)}.first
+    if tweet.nil?
+      sleep 1
+      tweet = search_last_tweet_by_text(user_screen_name, text, max_id: tweets[-1]['id_str'])
+    end
+    return tweet
+  end
+
+  #
   # 指定したテキストをツイートする
   #
   def tweet(text)
