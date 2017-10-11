@@ -40,7 +40,16 @@ class Twitter
   end
 
   #
-  # 指定したテキストを含む直近のツイートを取得
+  # 自身が指定したテキストを含むツイートを投稿してから何日建ったかを取得
+  #
+  def get_days_from_tweeted(text)
+    tweet = search_last_tweet_by_text(@twitter.info['screen_name'], text)
+    tweet.nil? and return false
+    return (Date.today - Date.parse(tweet['created_at'])).to_i
+  end
+
+  #
+  # 指定したユーザの、指定したテキストを含む直近のツイートを取得
   #
   def search_last_tweet_by_text(user_screen_name, text, opt = {})
     params = {

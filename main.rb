@@ -9,6 +9,7 @@ begin
   zaim     = Zaim.new
   payments = zaim.get_days_amount(today)
   budget   = zaim.get_current_month_private_budget
+  contact  = Twitter.new.get_days_from_tweeted('コンタクト初日') + 1
 
   twitter.tweet(<<EOL)
 #{today.strftime('%Y-%m-%d')}
@@ -19,6 +20,8 @@ begin
 
 ツイート数: #{twitter.tweets_count(today)}
 コミット数: #{github.commit_count}
+
+コンタクト: #{contact}日目
 
 #ketilog
 EOL
