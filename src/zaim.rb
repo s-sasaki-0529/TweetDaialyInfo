@@ -3,7 +3,7 @@ require 'pp'
 require_relative "util"
 class Zaim
 
-  BUDGET  = 40000
+  MONTHLY_BUDGET  = 40000
   API_URL = 'https://api.zaim.net/v2/'
 
   #
@@ -33,6 +33,16 @@ class Zaim
       public: public_amounts,
       private: private_amounts
     }
+  end
+
+  #
+  # 今月の残りお小遣い額を取得
+  #
+  def get_current_month_private_budget
+    today = Date.today
+    payments = self.get_month_payments(today.year, today.month).select {|payment| payment['comment'] =~ /私費/}
+    total_amount = payments.inject(0) {|sum, n| sum + n['amount']}
+    return MONTHLY_BUDGET - total_amount
   end
 
   #
