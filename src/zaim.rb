@@ -3,6 +3,7 @@ require 'pp'
 require_relative "util"
 class Zaim
 
+  BUDGET  = 40000
   API_URL = 'https://api.zaim.net/v2/'
 
   #
@@ -39,9 +40,19 @@ class Zaim
   #
   def get_days_payments(date, params = {})
     date = date.strftime('%Y-%m-%d')
-    params["mode"] = "payment"
-    params["start_date"] = date
-    params["end_date"] = date
+    self.get_payments({
+      start_date: date,
+      end_date:   date
+    })
+  end
+
+  #
+  # 支出一覧を取得
+  #
+  def get_payments(params)
+    params.merge!({
+      'mode': 'payment'
+    })
     url = Util.make_url("home/money" , params)
     get(url)['money']
   end
