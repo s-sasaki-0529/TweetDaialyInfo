@@ -27,7 +27,6 @@ EOL
 rescue => e
   Twitter.new.tweet(<<EOL)
   #ketilog がバグりました
-
-  #{e}
+  #{e.backtrace.join("\n")}
 EOL
 end
