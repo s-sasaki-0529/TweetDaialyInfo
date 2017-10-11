@@ -47,6 +47,16 @@ class Zaim
   end
 
   #
+  # 指定した月の支出一覧を取得
+  #
+  def get_month_payments(year, month, params = {})
+    self.get_payments({
+      start_date: Date.new(year, month),
+      end_date:   Date.new(year, month, -1)
+    })
+  end
+
+  #
   # 支出一覧を取得
   #
   def get_payments(params)
