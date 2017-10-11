@@ -24,17 +24,6 @@ class Github
     @events.inject(0) {|sum, e| sum + e['payload']['commits'].length}
   end
 
-  #
-  # イベントリストに含まれる総変更行数を取得
-  #
-  def total_added_lines
-    @events.inject(0) do |total, event|
-      total + event['payload']['commits'].inject(0) do |lines, commit|
-        lines + added_lines(event['repo']['name'], commit['sha'])
-      end
-    end
-  end
-
   private
 
     #
@@ -47,16 +36,6 @@ class Github
         e['created_at'] = Util.str_to_date(e['created_at'])
         e['type'] === 'PushEvent' && e['repo']['name'].index(@username) && e['created_at'] == date
       end
-    end
-
-    #
-    # 指定したコミットの変更行数を取得
-    # 変更行数は、追加行数 - 削除行数で求める
-    #
-    def added_lines(repository, commit_hash)
-      url = "#{@@BASE_URL}/repos/#{repository}/commits/#{commit_hash}"
-      commit = get url
-      commit['files'].reject {|f| f['filename'].index('backup')}.inject(0) {|sum, f| sum + (f['additions'] - f['deletions']) }
     end
 
     #
