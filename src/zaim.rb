@@ -3,7 +3,7 @@ require 'pp'
 require_relative "util"
 class Zaim
 
-  MONTHLY_BUDGET  = 40000
+  MONTHLY_BUDGET  = 50000
   API_URL = 'https://api.zaim.net/v2/'
 
   #
