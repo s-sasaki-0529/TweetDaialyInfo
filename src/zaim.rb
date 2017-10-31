@@ -23,10 +23,15 @@ class Zaim
 
   #
   # 指定した日付の私費/公費の和をそれぞれ戻す
+  # 公費とも私費とも取れない支払いがあった場合に例外を吐く
   #
   def get_days_amount(date , params = {})
     payments = self.get_days_payments(date, params)
-    private_payments, public_payments = payments.partition{|payment| payment['comment'] =~ /私費/}
+    private_payments = payments.select{|payment| payment['comment'] =~ /私費/}
+    public_payments  = payments.select{|payment| payment['comment'] =~ /公費/}
+    unless (payments - private_payments - public_payments).empty?
+      raise '公費でも私費でもない支払いがzaimに登録されてるよ！'
+    end
     public_amounts = public_payments.inject(0) {|sum, n| sum + n['amount'] }
     private_amounts = private_payments.inject(0) {|sum, n| sum + n['amount'] }
     return {
