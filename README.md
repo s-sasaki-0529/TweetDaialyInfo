@@ -2,6 +2,7 @@
 
 ## 前提
 
+- 完全に私用ツール
 - TwitterAPIのアクセストークンを取得済み
 - ZaimAPIのアクセストークンを取得済み
 - Ruby/gemsが使える環境
@@ -40,7 +41,9 @@ bundle exec ruby main.rb
 
 ## 実行結果
 
-「本日の支出は680円です」などのツイートが投稿される
+こんな感じのツイートが投稿される
+
+![スクリーンショット](https://github.com/Sa2Knight/screenshot/blob/master/tweetdialyinfo.png)
 
 ## 運用
 
