@@ -2,3 +2,4 @@
 .bundle
 bundle/*
 keys.json
+google_analytics_auth.json
