@@ -13,7 +13,7 @@ begin
   contact  = Twitter.new.get_days_from_tweeted('コンタクト初日') + 1
   sessions = Analytics.new('158527891').report_sessions_count_by_date(today)
 
-  twitter.tweet(<<EOL)
+  tweet_result = tweet_text = <<EOL
 #{today.strftime('%Y-%m-%d')}
 
 [Zaim]
@@ -30,15 +30,17 @@ begin
 
 [Analytics]
 ブログセッション: #{sessions[:total]}
-
-#ketilog
 EOL
 
+  twitter.tweet(tweet_text[0, 140])
+
 rescue => e
+  p e
   err_tweet = <<EOL
   #ketilog バグった
   #{e}
   #{e.backtrace.join("\n")}
 EOL
-  Twitter.new.tweet(err_tweet.byteslice(0, 140))
+  p err_tweet
+  Twitter.new.tweet(err_tweet[0, 140])
 end
