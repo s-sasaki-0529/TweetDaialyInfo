@@ -13,7 +13,7 @@ begin
   contact  = Twitter.new.get_days_from_tweeted('コンタクト初日') + 1
   sessions = Analytics.new('158527891').report_sessions_count_by_date(today)
 
-  tweet_result = tweet_text = <<EOL
+  tweet_text = <<EOL
 #{today.strftime('%Y-%m-%d')}
 
 [Zaim]
