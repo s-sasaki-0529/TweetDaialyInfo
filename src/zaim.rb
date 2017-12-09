@@ -9,7 +9,7 @@ class Zaim
   #
   # 初期化時にZaimAPIの利用準備を行う
   #
-  def initialize
+  def initialize(date)
     api_key = Util.get_zaim_api_key
     oauth_params = {
       site: "https://api.zaim.net",
@@ -19,6 +19,7 @@ class Zaim
     }
     @consumer = OAuth::Consumer.new(api_key["key"], api_key["secret"], oauth_params)
     @access_token = OAuth::AccessToken.new(@consumer, api_key["access_token"], api_key["access_token_secret"])
+    @date = date
   end
 
   #
@@ -44,7 +45,7 @@ class Zaim
   # 今月の残りお小遣い額を取得
   #
   def get_current_month_private_budget
-    today = Date.today
+    today = @date
     payments = self.get_month_payments(today.year, today.month).select {|payment| payment['comment'] =~ /私費/}
     total_amount = payments.inject(0) {|sum, n| sum + n['amount']}
     return MONTHLY_BUDGET - total_amount

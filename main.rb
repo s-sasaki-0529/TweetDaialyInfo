@@ -7,7 +7,7 @@ begin
   today    = Date.today
   github   = Github.new('Sa2Knight')
   twitter  = Twitter.new
-  zaim     = Zaim.new
+  zaim     = Zaim.new(today)
   payments = zaim.get_days_amount(today)
   budget   = zaim.get_current_month_private_budget
   contact  = Twitter.new.get_days_from_tweeted('コンタクト初日') + 1
