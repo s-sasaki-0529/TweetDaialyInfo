@@ -24,12 +24,6 @@ begin
 [Twitter]
 ツイート: #{twitter.tweets_count(today)}
 コンタクト: #{contact}日目
-
-[Github]
-コミット: #{github.commit_count}
-
-[Analytics]
-ブログセッション: #{sessions[:total]}
 EOL
 
   twitter.tweet(tweet_text[0, 140])
