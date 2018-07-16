@@ -8,7 +8,7 @@ begin
 
   # ZaimAPI連携
   zaim     = Zaim.new(today)
-  payments = zaim.get_days_amount(today)
+  payments = zaim.get_days_amount
   budget   = zaim.get_current_month_private_budget
 
   # DMM残容量をスクレイピング
