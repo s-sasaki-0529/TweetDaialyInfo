@@ -10,6 +10,7 @@ begin
   zaim     = Zaim.new(today)
   payments = zaim.get_days_amount
   budget   = zaim.get_current_month_private_budget
+  lunch_place = zaim.get_lunch_place
 
   # DMM残容量をスクレイピング
   dmm      = Dmm.new
@@ -26,6 +27,7 @@ begin
 支出[私費]: #{payments[:private]}円
 予算[今月]: #{budget}円
 
+昼食: #{lunch_place}
 コンタクト: #{contact}日目
 スマホ残容量: #{dmm.remaing_rate}%
 

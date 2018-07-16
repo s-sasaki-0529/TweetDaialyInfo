@@ -1,10 +1,12 @@
+require 'oauth'
 require 'json'
 require 'pp'
-require_relative "util"
+require_relative 'util'
 class Zaim
 
   MONTHLY_BUDGET  = 60000
   API_URL = 'https://api.zaim.net/v2/'
+  LUNCH_GENRE_ID = 10104
 
   #
   # 初期化時にZaimAPIの利用準備を行う
@@ -24,8 +26,20 @@ class Zaim
   end
 
   #
-  # 指定した日付の私費/公費の和をそれぞれ戻す
-  # 公費とも私費とも取れない支払いがあった場合に例外を吐く
+  # 本日のお昼を食べた場所を戻す
+  #
+  def get_lunch_place
+    payments = get_days_payments(@date, genre_id: LUNCH_GENRE_ID)
+    return '支払い情報なし' if payments.nil? || payments.first.nil?
+
+    payment = payments.first
+    return '店舗情報なし' if payment['place'].nil? || payment['place'].empty?
+
+    return payment['place']
+  end
+
+  #
+  # 本日の私費/公費の和をそれぞれ戻す
   #
   def get_days_amount(params = {})
     payments = get_days_payments(@date, params)
@@ -58,10 +72,10 @@ class Zaim
     #
     def get_days_payments(date, params = {})
       date = date.strftime('%Y-%m-%d')
-      get_payments({
+      get_payments(params.merge({
         start_date: date,
         end_date:   date
-      })
+      }))
     end
 
     #
