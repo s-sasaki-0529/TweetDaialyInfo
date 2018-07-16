@@ -7,7 +7,7 @@ begin
   today    = Date.today
 
   # ZaimAPI連携
-  zaim     = Zaim.new
+  zaim     = Zaim.new(today)
   payments = zaim.get_days_amount(today)
   budget   = zaim.get_current_month_private_budget
 
