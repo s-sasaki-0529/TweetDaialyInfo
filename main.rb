@@ -10,7 +10,8 @@ begin
   zaim     = Zaim.new(today)
   payments = zaim.get_days_amount
   budget   = zaim.get_current_month_private_budget
-  lunch_place = zaim.get_lunch_place
+  lunch_place    = zaim.get_lunch_place
+  since_hair_cut = zaim.get_days_since_hair_cut
 
   # DMM残容量をスクレイピング
   dmm      = Dmm.new
@@ -29,6 +30,7 @@ begin
 
 昼食: #{lunch_place}
 コンタクト: #{contact}日目
+散髪から: #{since_hair_cut}日目
 スマホ残容量: #{dmm.remaing_rate}%
 
 #ketilog

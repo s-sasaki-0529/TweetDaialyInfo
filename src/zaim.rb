@@ -5,8 +5,9 @@ require_relative 'util'
 class Zaim
 
   MONTHLY_BUDGET  = 60000
-  API_URL = 'https://api.zaim.net/v2/'
-  LUNCH_GENRE_ID = 10104
+  API_URL          = 'https://api.zaim.net/v2/'.freeze
+  LUNCH_GENRE_ID   = 10104
+  HAIRCUT_GENRE_ID = 11105
 
   #
   # 初期化時にZaimAPIの利用準備を行う
@@ -36,6 +37,15 @@ class Zaim
     return '店舗情報なし' if payment['place'].nil? || payment['place'].empty?
 
     return payment['place']
+  end
+
+  #
+  # 前回散髪からの日数を戻す
+  #
+  def get_days_since_hair_cut
+    payments = get_payments(genre_id: HAIRCUT_GENRE_ID)
+    last_date = Date.parse(payments.first['date'])
+    (@date - last_date).to_i
   end
 
   #
@@ -110,5 +120,4 @@ class Zaim
       response = @access_token.get("#{API_URL}#{url}")
       JSON.parse(response.body)
     end
-
 end
