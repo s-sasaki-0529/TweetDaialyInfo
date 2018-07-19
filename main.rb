@@ -5,6 +5,7 @@ require_relative 'src/dmm'
 begin
   # スクリプト実行日
   today    = Date.today
+  dow      = %w(日 月 火 水 木 金 土)[today.wday]
 
   # ZaimAPI連携
   zaim     = Zaim.new(today)
@@ -22,7 +23,7 @@ begin
 
   # ツイート内容の生成
   tweet_result = tweet_text = <<EOL
-#{today.strftime('%Y-%m-%d')}
+#{today.strftime('%Y-%m-%d')}(#{dow})
 
 支出[公費]: #{payments[:public]}円
 支出[私費]: #{payments[:private]}円
