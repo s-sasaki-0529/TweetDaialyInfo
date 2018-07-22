@@ -1,6 +1,7 @@
 require_relative 'src/twitter'
 require_relative 'src/zaim'
 require_relative 'src/dmm'
+require_relative 'src/fitbit'
 
 begin
   # スクリプト実行日
@@ -21,6 +22,10 @@ begin
   twitter  = Twitter.new
   contact  = Twitter.new.get_days_from_tweeted('コンタクト初日') + 1
 
+  # FitbitAPI連携
+  fitbit   = Fitbit.new
+  steps    = fitbit.fetch_steps_by_date(today)
+
   # ツイート内容の生成
   tweet_result = tweet_text = <<EOL
 #{today.strftime('%Y-%m-%d')}(#{dow})
@@ -30,6 +35,7 @@ begin
 予算[今月]: #{budget}円
 
 昼食: #{lunch_place}
+歩数: #{steps}歩
 コンタクト: #{contact}日目
 散髪から: #{since_hair_cut}日目
 スマホ残容量: #{dmm.remaing_rate}%
