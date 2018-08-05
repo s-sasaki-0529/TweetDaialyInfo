@@ -61,4 +61,14 @@ class Util
     DateTime.parse(date).new_offset(Rational(9, 24)).to_date
   end
 
+  #
+  # 指定した日付の、月に対する日数の割合を戻す
+  # ex: date = 9/15の場合、30日中の半分が終わっているので0.5を戻す
+  #
+  def self.days_rate_by(date:)
+    days = Date.new(date.year, date.month, -1).day
+    day  = date.day
+    day.to_f / days.to_f
+  end
+
 end

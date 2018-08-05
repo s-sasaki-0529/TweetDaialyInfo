@@ -12,8 +12,9 @@ begin
   zaim     = Zaim.new(today)
   payments = zaim.get_days_amount
   budget   = zaim.get_current_month_private_budget
-  lunch_place    = zaim.get_lunch_place
-  since_hair_cut = zaim.get_days_since_hair_cut
+  budget_indication = zaim.get_month_private_budget_indication
+  lunch_place       = zaim.get_lunch_place
+  since_hair_cut    = zaim.get_days_since_hair_cut
 
   # DMM残容量をスクレイピング
   dmm      = Dmm.new
@@ -24,7 +25,7 @@ begin
 
   # FitbitAPI連携
   fitbit   = Fitbit.new
-  # steps    = fitbit.fetch_steps_by_date(today)
+  # steps    = fitbit.fetch_steps_by_date(today) APIトークンが安定しないため
 
   # ツイート内容の生成
   tweet_result = tweet_text = <<EOL
@@ -33,6 +34,7 @@ begin
 支出[公費]: #{payments[:public]}円
 支出[私費]: #{payments[:private]}円
 予算[今月]: #{budget}円
+予算[目安]: #{budget_indication}円
 
 昼食: #{lunch_place}
 コンタクト: #{contact}日目

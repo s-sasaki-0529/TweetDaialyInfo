@@ -75,6 +75,15 @@ class Zaim
     return MONTHLY_BUDGET - total_amount
   end
 
+  #
+  # 今月の残りお小遣い額の目安を取得
+  # ex) 今月残り1/3の場合、お小遣い額の2/3を戻す
+  #
+  def get_month_private_budget_indication
+    days_rate = Util.days_rate_by(date: @date)
+    (MONTHLY_BUDGET * (1 - days_rate)).to_i
+  end
+
   private
 
     #
