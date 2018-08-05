@@ -1,11 +1,17 @@
+require 'optparse'
 require_relative 'src/twitter'
 require_relative 'src/zaim'
 require_relative 'src/dmm'
 require_relative 'src/fitbit'
 
 begin
+  # コマンドライン引数解釈
+  arguments = ARGV.getopts('d:s')
+  date_offset = arguments['d'] ? arguments['d'].to_i : 0
+  is_stdout =   arguments['s']
+
   # スクリプト実行日
-  today    = Date.today + ARGV[0].to_i
+  today    = Date.today + date_offset
   dow      = %w(日 月 火 水 木 金 土)[today.wday]
 
   # ZaimAPI連携
@@ -45,8 +51,12 @@ begin
 #ketilog
 EOL
 
-  # ツイートを投稿
-  twitter.tweet(tweet_text[0, 140])
+  # ツイートまたは標準出力
+  if is_stdout
+    puts tweet_text
+  else
+    twitter.tweet(tweet_text[0, 140])
+  end
 
 rescue => e
   p e
