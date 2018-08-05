@@ -33,4 +33,13 @@ class Dmm
     100.0 - used_rate
   end
 
+  #
+  # 残量用の目安
+  # ex) 今月残り1/3の場合、33.3を戻す
+  #
+  def remaing_rate_indication
+    days_rate = Util.days_rate_by(date: Date.today)
+    ((1 - days_rate) * 100).to_i
+  end
+
 end
