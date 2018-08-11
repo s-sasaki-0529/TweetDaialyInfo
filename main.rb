@@ -3,6 +3,7 @@ require_relative 'src/twitter'
 require_relative 'src/zaim'
 require_relative 'src/dmm'
 require_relative 'src/fitbit'
+require_relative 'src/touch_on_time'
 
 begin
   # コマンドライン引数解釈
@@ -24,6 +25,9 @@ begin
 
   # DMM残容量をスクレイピング
   dmm      = Dmm.new
+
+  # TouchOnTimeで残業時間をスクレイピング
+  touch_on_time = TouchOnTime.new
 
   # TwitterAPI連携
   twitter  = Twitter.new
@@ -47,6 +51,7 @@ begin
 散髪から: #{since_hair_cut}日目
 スマホ残容量: #{dmm.remaing_rate}%
 スマホ残目安: #{dmm.remaing_rate_indication}%
+今月残業時間: #{touch_on_time.total_over_time}時間
 
 #ketilog
 EOL
