@@ -27,7 +27,7 @@ begin
   dmm      = Dmm.new
 
   # TouchOnTimeで残業時間をスクレイピング
-  touch_on_time = TouchOnTime.new
+  touch_on_time = TouchOnTime.new(today)
 
   # TwitterAPI連携
   twitter  = Twitter.new
@@ -46,12 +46,14 @@ begin
 予算[今月]: #{budget}円
 予算[目安]: #{budget_indication}円
 
+残業[本日]: #{touch_on_time.days_over_time_str}
+残業[今月]: #{touch_on_time.total_over_time_str}
+
 昼食: #{lunch_place}
 コンタクト: #{contact}日目
 散髪から: #{since_hair_cut}日目
 スマホ残容量: #{dmm.remaing_rate}%
 スマホ残目安: #{dmm.remaing_rate_indication}%
-今月残業時間: #{touch_on_time.total_over_time}時間
 
 #ketilog
 EOL
@@ -60,7 +62,7 @@ EOL
   if is_stdout
     puts tweet_text
   else
-    twitter.tweet(tweet_text[0, 140])
+    twitter.tweet(tweet_text)
   end
 
 rescue => e
@@ -71,5 +73,5 @@ rescue => e
   #{e.backtrace.join("\n")}
 EOL
   p err_tweet
-  Twitter.new.tweet(err_tweet[0, 140])
+  Twitter.new.tweet(err_tweet[0, 160])
 end
