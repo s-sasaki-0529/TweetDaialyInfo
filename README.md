@@ -1,37 +1,15 @@
 # 一日の記録をツイートするCUIツール
 
-## 前提
+自身の日々の生活の目安となる各種数値を、各サービスから取得、集計してTwitterに投稿する個人用ツール
 
-- 完全に私用ツール
-- TwitterAPIのアクセストークンを取得済み
-- ZaimAPIのアクセストークンを取得済み
-- Ruby/gemsが使える環境
+## 連携するもの
 
-## インストール方法
-
-1. git clone git@github.com:Sa2Knight/TweetPaidInfo.git
-2. cd TweetPaidInfo
-3. bundle install --path bundle/vendor
-4. keys.json(アクセストークンなどを記載したファイル)を配置
-
-## keys.jsonの例
-
-```
-{
-  "zaim": {
-    "key":"hogehoge",
-    "secret":"fugafuga",
-    "access_token":"foofoo",
-    "access_token_secret":"barbar"
-  },
-  "twitter": {
-    "key":"hogehoge",
-    "secret":"fugafuga",
-    "access_token":"foofoo",
-    "access_token_secret":"barbar"
-  }
-}
-```
+- Twitter
+- Zaim
+- Fitbit
+- DMMMobile
+- Github
+- Touch on time
 
 ## 実行方法
 
@@ -43,7 +21,23 @@ bundle exec ruby main.rb
 
 こんな感じのツイートが投稿される
 
-![スクリーンショット](https://github.com/Sa2Knight/screenshot/blob/master/tweetdialyinfo.png)
+```
+2018-08-11(土)
+
+支出[公費]: 1200円
+支出[私費]: 852円
+予算[今月]: 43199円
+予算[目安]: 38709円
+
+昼食: 吉野家
+コンタクト: 12日目
+散髪から: 38日目
+スマホ残容量: 64.67%
+スマホ残目安: 64%
+今月残業時間: 2.09時間
+
+#ketilog
+```
 
 ## 運用
 
