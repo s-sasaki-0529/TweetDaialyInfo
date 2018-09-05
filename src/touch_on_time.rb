@@ -1,12 +1,15 @@
+require 'json'
 class TouchOnTime
   SCRIPT_PATH   = '/root/TouchOnTimeChecker/main.py'.freeze
 
   def initialize(date)
     script_response = `python #{SCRIPT_PATH} #{date.day}`
-    script_results  = script_response.strip.split(',')
+    script_results  = JSON.parse(script_response)
 
-    @total_over_time = script_results[0]
-    @days_over_time  = script_results[1]
+    @days_start_time = script_results['days_start_time']
+    @days_end_time   = script_results['days_end_time']
+    @total_over_time = script_results['total_over_time']
+    @days_over_time  = script_results['days_over_time']
   end
 
   def total_over_time_str
@@ -15,6 +18,10 @@ class TouchOnTime
 
   def days_over_time_str
     time_str(@days_over_time)
+  end
+
+  def days_working_time_str
+    "#{@days_start_time}~#{@days_end_time}"
   end
 
   private

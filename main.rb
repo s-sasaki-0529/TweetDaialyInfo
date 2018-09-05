@@ -46,6 +46,7 @@ begin
 予算[今月]: #{budget}円
 予算[目安]: #{budget_indication}円
 
+勤務[本日]: #{touch_on_time.days_working_time_str}
 残業[本日]: #{touch_on_time.days_over_time_str}
 残業[今月]: #{touch_on_time.total_over_time_str}
 
