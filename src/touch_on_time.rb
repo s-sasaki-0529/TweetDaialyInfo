@@ -21,12 +21,16 @@ class TouchOnTime
   end
 
   def days_working_time_str
-    "#{@days_start_time}~#{@days_end_time}"
+    if @days_start_time && @days_end_time
+      "#{@days_start_time}~#{@days_end_time}"
+    else
+      'お休み'
+    end
   end
 
   private
     def time_str(str)
-      return '出勤情報なし' if str == '-'
+      return '出勤情報なし' if str.nil?
       str = str.to_f
       str >= 0 ? "+#{str}時間" : "#{str}時間"
     end
