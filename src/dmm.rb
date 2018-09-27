@@ -30,7 +30,7 @@ class Dmm
 
   # 残容量の割合
   def remaing_rate
-    100.0 - used_rate
+    (100.0 - used_rate).round(2)
   end
 
   #
