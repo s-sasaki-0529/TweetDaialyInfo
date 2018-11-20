@@ -5,7 +5,13 @@ require_relative 'src/dmm'
 require_relative 'src/fitbit'
 require_relative 'src/touch_on_time'
 
+# 例外発生時にリトライ用カウント
+try_cnt = 0
+
 begin
+
+  try_cnt += 1
+
   # コマンドライン引数解釈
   arguments = ARGV.getopts('d:s')
   date_offset = arguments['d'] ? arguments['d'].to_i : 0
@@ -67,6 +73,7 @@ EOL
   end
 
 rescue => e
+  retry if try_cnt < 3
   p e
   err_tweet = <<EOL
   #ketilog バグった
