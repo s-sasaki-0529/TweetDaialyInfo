@@ -26,7 +26,6 @@ begin
   payments = zaim.get_days_amount
   budget   = zaim.get_current_month_private_budget
   budget_indication = zaim.get_month_private_budget_indication
-  lunch_place       = zaim.get_lunch_place
   since_hair_cut    = zaim.get_days_since_hair_cut
 
   # DMM残容量をスクレイピング
@@ -56,7 +55,6 @@ begin
 残業[本日]: #{touch_on_time.days_over_time_str}
 残業[今月]: #{touch_on_time.total_over_time_str}
 
-昼食: #{lunch_place}
 コンタクト: #{contact}日目
 散髪から: #{since_hair_cut}日目
 スマホ残容量: #{dmm.remaing_rate}%
