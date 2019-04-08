@@ -24,7 +24,7 @@ class TouchOnTime
     if @days_start_time && @days_end_time
       "#{@days_start_time}~#{@days_end_time}"
     else
-      'お休み'
+      '勤怠情報なし'
     end
   end
 
