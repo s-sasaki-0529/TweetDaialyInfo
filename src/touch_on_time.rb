@@ -10,6 +10,8 @@ class TouchOnTime
     @days_end_time   = script_results['days_end_time']
     @total_over_time = script_results['total_over_time']
     @days_over_time  = script_results['days_over_time']
+  rescue
+    @days_start_time = @days_end_time = @total_over_time = @days_over_time = nil
   end
 
   def total_over_time_str
