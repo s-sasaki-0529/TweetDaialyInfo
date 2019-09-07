@@ -57,8 +57,8 @@ begin
 
 コンタクト: #{contact}日目
 散髪から: #{since_hair_cut}日目
-スマホ残容量: #{dmm.remaing_rate}%
-スマホ残目安: #{dmm.remaing_rate_indication}%
+スマホ残容量: #{dmm.remaing_capacity ? dmm.remaing_rate + '%' : '取得失敗'}
+スマホ残目安: #{dmm.remaing_capacity ? dmm.remaing_rate_indication + '%' : '取得失敗'}
 
 #ketilog
 EOL

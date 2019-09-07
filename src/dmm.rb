@@ -8,8 +8,9 @@ class Dmm
     @remaing_capacity = remaing_capacity
     unless @remaing_capacity
       script_result = `python #{SCRIPT_PATH}`
-      raise script_result unless script_result =~ /MB$/
-      @remaing_capacity = script_result.split('MB').first.tr(',', '').to_i
+      if script_result =~ /MB$/
+        @remaing_capacity = script_result.split('MB').first.tr(',', '').to_i
+      end
     end
   end
 
