@@ -37,7 +37,7 @@ GEM
     mime-types-data (3.2016.0521)
     multi_json (1.12.2)
     multipart-post (2.0.0)
-    oauth (0.5.1)
+    oauth (0.5.5)
     os (0.9.6)
     public_suffix (3.0.0)
     representable (3.0.4)
